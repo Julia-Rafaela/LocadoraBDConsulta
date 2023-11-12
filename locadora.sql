@@ -75,8 +75,8 @@ INSERT INTO filme VALUES
 (1001, 'Whiplash', 2015),
 (1002, 'Birdman', 2015),
 (1003, 'Interestelar', 2014),
-(1004, 'A Culpa é das estrelas', 2014),
-(1005, 'Alexandre e o Dia Terrível, Horrível', 2014),
+(1004, 'A Culpa Ã© das estrelas', 2014),
+(1005, 'Alexandre e o Dia TerrÃ­vel, HorrÃ­vel', 2014),
 (1006, 'Sing', 2016)
 
 INSERT INTO estrela VALUES
@@ -105,11 +105,11 @@ INSERT INTO dvd VALUES
 (10009, '2020-04-03', 1003)
 
 INSERT INTO cliente VALUES
-(5501, 'Matilde Luz', 'Rua Síria', 150, '03086040'),
+(5501, 'Matilde Luz', 'Rua SÃ­ria', 150, '03086040'),
 (5502, 'Carlos Carreiro', 'Rua Bartolomeu Aires', 1250, '04419110'),
 (5503, 'Daniel Ramalho', 'Rua Itajutiba', 169, ''),
 (5504, 'Roberta Bento', 'Rua Jayme Von Rosenburg', 36, ''),
-(5505, 'Rosa Cerqueira',  'Rua Arnaldo Simões Pinto', 135, '02917110')
+(5505, 'Rosa Cerqueira',  'Rua Arnaldo SimÃµes Pinto', 135, '02917110')
 
 INSERT INTO locacao VALUES
 (10001, 5502, '2021-02-18','2021-02-21',3.50),
@@ -163,17 +163,17 @@ SELECT id, ano
 FROM filme
 WHERE titulo LIKE '%plash'
 
---Fazer um select que retorne o id, o nome e o nome_real da estrela cujo nome começa com Steve
+--Fazer um select que retorne o id, o nome e o nome_real da estrela cujo nome comeÃ§a com Steve
 SELECT id_estrela, nome, nome_real
 FROM estrela
 WHERE nome LIKE 'Steve%'
 
--- Fazer um select que retorne FilmeId e a data_fabricação em formato (DD/MM/YYYY) (apelidar de fab) dos filmes fabricados a partir de 01-01-2020
+-- Fazer um select que retorne FilmeId e a data_fabricaÃ§Ã£o em formato (DD/MM/YYYY) (apelidar de fab) dos filmes fabricados a partir de 01-01-2020
 SELECT id, CONVERT(CHAR(10), data_fabricacao, 103) AS fab
 FROM dvd
 WHERE data_fabricacao >= '2020-01-01'
 
--- Fazer um select que retorne DVDnum, data_locacao, data_devolucao, valor e valor com multa de acréscimo de 2.00 da locação do cliente 5505
+-- Fazer um select que retorne DVDnum, data_locacao, data_devolucao, valor e valor com multa de acrÃ©scimo de 2.00 da locaÃ§Ã£o do cliente 5505
 SELECT num,
     data_locacao,
     data_devolucao,
@@ -194,7 +194,7 @@ SELECT nome_real
 FROM estrela
 WHERE nome = 'Michael Keaton'
 
---Fazer um select que retorne o num_cadastro, o nome e o endereço completo, concatenando (logradouro, numero e CEP), apelido end_comp, dos clientes cujo ID é maior ou igual 5503
+--Fazer um select que retorne o num_cadastro, o nome e o endereÃ§o completo, concatenando (logradouro, numero e CEP), apelido end_comp, dos clientes cujo ID Ã© maior ou igual 5503
 SELECT num_cadastro,
      nome,
 	 logradouro +' '+ CAST(num AS VARCHAR) + ' ' + cep AS end_comp
@@ -203,7 +203,7 @@ WHERE num_cadastro >= 5503
 
 --Fazer uma consulta que retorne ID, Ano, nome do Filme (Caso o nome do filme tenha
 --mais de 10 caracteres, para caber no campo da tela, mostrar os 10 primeiros
---caracteres, seguidos de reticências ...) dos filmes cujos DVDs foram fabricados depois
+--caracteres, seguidos de reticÃªncias ...) dos filmes cujos DVDs foram fabricados depois
 --de 01/01/2020
 
 SELECT f.id,
@@ -217,7 +217,7 @@ JOIN dvd AS d ON num = num
 WHERE data_fabricacao>  '2020-01-01';
 
 --Fazer uma consulta que retorne num, data_fabricacao, qtd_meses_desde_fabricacao
---(Quantos meses desde que o dvd foi fabricado até hoje) do filme Interestelar
+--(Quantos meses desde que o dvd foi fabricado atÃ© hoje) do filme Interestelar
 
 SELECT num,
         data_fabricacao,
@@ -227,19 +227,19 @@ JOIN dvd AS d ON num = num
 WHERE titulo>  'Interestelar';
 
 --Fazer uma consulta que retorne num_dvd, data_locacao, data_devolucao,
---dias_alugado(Total de dias que o dvd ficou alugado) e valor das locações da cliente que
+--dias_alugado(Total de dias que o dvd ficou alugado) e valor das locaÃ§Ãµes da cliente que
 --tem, no nome, o termo Rosa
 SELECT d.num,
         l.data_locacao,
 		l.data_devolucao,
 		l.valor,
-	    DATEDIFF(DAY, data_locacao, GETDATE()) AS quant_dias_alugado
+	    DATEDIFF(DAY, data_locacao, data_devolucao) AS quant_dias_alugado
 FROM locacao AS l
 JOIN dvd AS d ON l.num = d.num
 JOIN cliente c ON l.num_cadastro = c.num_cadastro
 WHERE nome LIKE  '%Rosa%';
 
---Nome, endereço_completo (logradouro e número concatenados), cep (formato
+--Nome, endereÃ§o_completo (logradouro e nÃºmero concatenados), cep (formato
 --XXXXX-XXX) dos clientes que alugaram DVD de num 10002.
 SELECT c.nome,
        c.logradouro + ' ' + CAST(c.num AS VARCHAR(10)) AS end_completo,
